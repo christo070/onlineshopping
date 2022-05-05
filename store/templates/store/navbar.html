@@ -1,0 +1,128 @@
+<!-- Navbar  -->
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <div class="container">
+        <a href="{% url 'home' %}" class="navbar-brand">Website Name/Logo</a>
+
+        <!-- Hamburger -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Menu -->
+        <div class="collapse navbar-collapse" id="navmenu">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="{% url 'home' %}" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'home' %}#trending" class="nav-link">Trending</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#categories" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Category
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
+                        style="height: 500px; max-height: 1000px; overflow-y: scroll; top:55px">
+                        <li><a class="dropdown-item" selected="selected" value="aps">All Departments</a>
+                        </li>
+                        <li><a class="dropdown-item" value="appliances">Appliances</a></li>
+                        <li><a class="dropdown-item" value="mobile-apps">Apps &amp; Games</a></li>
+                        <li><a class="dropdown-item" value="arts-crafts">Arts, Crafts &amp; Sewing</a></li>
+                        <li><a class="dropdown-item" value="automotive">Automotive Parts &amp;
+                                Accessories</a></li>
+                        <li><a class="dropdown-item" value="baby-products">Baby</a></li>
+                        <li><a class="dropdown-item" value="beauty">Beauty &amp; Personal Care</a></li>
+                        <li><a class="dropdown-item" value="stripbooks">Books</a></li>
+                        <li><a class="dropdown-item" value="popular">CDs &amp; Vinyl</a></li>
+                        <li><a class="dropdown-item" value="mobile">Cell Phones &amp; Accessories</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" value="fashion">Clothing, Shoes &amp; Jewelry</a></li>
+                        <li><a class="dropdown-item" value="fashion-womens">&nbsp;&nbsp;&nbsp;Women</a></li>
+                        <li><a class="dropdown-item" value="fashion-mens">&nbsp;&nbsp;&nbsp;Men</a></li>
+                        <li><a class="dropdown-item" value="fashion-girls">&nbsp;&nbsp;&nbsp;Girls</a></li>
+                        <li><a class="dropdown-item" value="fashion-boys">&nbsp;&nbsp;&nbsp;Boys</a></li>
+                        <li><a class="dropdown-item" value="fashion-baby">&nbsp;&nbsp;&nbsp;Baby</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" value="collectibles">Collectibles &amp; Fine Art</a>
+                        </li>
+                        <li><a class="dropdown-item" value="computers">Computers</a></li>
+                        <li><a class="dropdown-item" value="courses">Courses</a></li>
+                        <li><a class="dropdown-item" value="financial">Credit and Payment Cards</a></li>
+                        <li><a class="dropdown-item" value="digital-music">Digital Music</a></li>
+                        <li><a class="dropdown-item" value="electronics">Electronics</a></li>
+                        <li><a class="dropdown-item" value="gift-cards">Gift Cards</a></li>
+                        <li><a class="dropdown-item" value="grocery">Grocery &amp; Gourmet Food</a></li>
+                        <li><a class="dropdown-item" value="handmade">Handmade</a></li>
+                        <li><a class="dropdown-item" value="hpc">Health, Household &amp; Baby Care</a></li>
+                        <li><a class="dropdown-item" value="local-services">Home &amp; Business Services</a>
+                        </li>
+                        <li><a class="dropdown-item" value="garden">Home &amp; Kitchen</a></li>
+                        <li><a class="dropdown-item" value="industrial">Industrial &amp; Scientific</a></li>
+                        <li><a class="dropdown-item" value="fashion-luggage">Luggage &amp; Travel Gear</a>
+                        </li>
+                        <li><a class="dropdown-item" value="luxury-beauty">Luxury Beauty</a></li>
+                        <li><a class="dropdown-item" value="magazines">Magazine Subscriptions</a></li>
+                        <li><a class="dropdown-item" value="movies-tv">Movies &amp; TV</a></li>
+                        <li><a class="dropdown-item" value="mi">Musical Instruments</a></li>
+                        <li><a class="dropdown-item" value="office-products">Office Products</a></li>
+                        <li><a class="dropdown-item" value="lawngarden">Patio, Lawn &amp; Garden</a></li>
+                        <li><a class="dropdown-item" value="pets">Pet Supplies</a></li>
+                        <li><a class="dropdown-item" value="software">Software</a></li>
+                        <li><a class="dropdown-item" value="sporting">Sports &amp; Outdoors</a></li>
+                        <li><a class="dropdown-item" value="tools">Tools &amp; Home Improvement</a></li>
+                        <li><a class="dropdown-item" value="toys-and-games">Toys &amp; Games</a></li>
+                        <li><a class="dropdown-item" value="vehicles">Vehicles</a></li>
+                        <li><a class="dropdown-item" value="videogames">Video Games</a></li>
+                        <li><a class="dropdown-item" value="wine">Wine</a></li>
+                        <!-- <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex ms-auto">
+                <input class="form-control-sm me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn-sm btn-outline-success" type="submit">Search</button>
+            </form>
+            <!-- Login/SignUp -->
+            <div class="p-1" id="SignUp-Here">
+                <ul class="navbar-nav">
+                    <li class="nav-item ">
+                        <button onclick="window.location.href = './sign-up.html';"
+                                class="btn-sm btn-outline-primary" type="submit">Login/SignUp</button>
+                    </li>
+                </ul>
+            </div>
+            <!-- Account dropdown -->
+            <div class="btn-group dropstart p-2" id="Account-Menu">
+                <button type="button" class="btn btn-secondary dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false" style="border-radius:20px;">
+                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                        alt="mdo" width="32" height="32" class="rounded-circle">
+                </button>
+                <ul class="dropdown-menu" style="top: 55px; right: 0px;">
+                    <!-- Dropdown menu links -->
+                    <li><a class="dropdown-item" href="./account.html">Account</a></li>
+                    <li><a class="dropdown-item" href="#">Your Orders</a></li>
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#">Sign out</a></li>
+                </ul>
+            </div>
+            <div class="p-2">
+                <a class="btn btn-dark btn-floating" href="{% url 'cart' %}" role="button"><i class="fa fa-shopping-cart" style="font-size:35px;color:rgb(121, 190, 209)"></i></a>
+            </div>
+        </div>
+    </div>
+</nav>
