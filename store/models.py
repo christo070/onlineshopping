@@ -1,14 +1,15 @@
+from tkinter.tix import Tree
 from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
 
 class Address(models.Model):
-    city=models.CharField(max_length=20)
+    city=models.CharField(max_length=20, null=True, blank=True)
     streetaddress=models.TextField()
-    state=models.CharField(max_length=30)
-    country=models.CharField(max_length=30)
-    Zipcode=models.CharField(max_length=30)
+    state=models.CharField(max_length=30, null=True, blank=True)
+    country=models.CharField(max_length=30, null=True, blank=True)
+    Zipcode=models.CharField(max_length=30, null=True, blank=True)
 
     def __str__(self):
         return str(self.id)
