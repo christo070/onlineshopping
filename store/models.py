@@ -84,6 +84,7 @@ PAYMENT_STATUS=(
     ('Refunded','Refunded'),
 )
 
+
 class Payment(models.Model):
     status=models.CharField(max_length=50,choices=PAYMENT_STATUS,default="Unshipped")
     amount=models.FloatField()
