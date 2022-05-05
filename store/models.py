@@ -29,7 +29,7 @@ class Account(models.Model):
     status=models.CharField(max_length=50,choices=ACCOUNT_STATUS,default="Active")
     email=models.EmailField(max_length=250)
     phone=models.CharField(max_length=10)
-    address=models.ForeignKey(Address,on_delete=models.CASCADE)
+    address=models.ForeignKey(Address,on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -47,7 +47,7 @@ class Product(models.Model):
     description=models.TextField()
     price=models.IntegerField
     available_count=models.IntegerField()
-    category=models.ManyToManyRel(ProductCategory)
+    category=models.ManyToManyField(ProductCategory)
 
     def __str__(self):
         return self.name
@@ -91,9 +91,3 @@ class Payment(models.Model):
 
     def __str__(self):
         return str(self.id)
-
-
-
-    
-
-
