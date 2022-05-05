@@ -55,6 +55,8 @@ class Product(models.Model):
 
 
 
+#hello this is rough
+
 ORDER_STATUS=(
     ('Unshipped','Unshipped'),
     ('Pending','Pending'),
