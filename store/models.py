@@ -1,3 +1,4 @@
+from tkinter.tix import Tree
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -24,23 +25,33 @@ ACCOUNT_STATUS=(
 )
 
 class Account(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
-    name=models.CharField(max_length=200)
+    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
+    firstname = models.CharField(max_length=200, null=True, blank=True)
+    lastname = models.CharField(max_length=200, null=True, blank=True)
     status=models.CharField(max_length=50,choices=ACCOUNT_STATUS,default="Active")
-    email=models.EmailField(max_length=250)
-    phone=models.CharField(max_length=10)
+    email=models.EmailField(max_length=250, null=True, blank=True)
+    phone=models.CharField(max_length=10, null=True, blank=True)
     address=models.ForeignKey(Address,on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.firstname
 
 
 class ProductCategory(models.Model):
     name=models.CharField(max_length=250)
     description=models.TextField()
+    image = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         return self.name
+
+    @property
+    def imageURL(self):
+        try:
+            url = self.image.url
+        except:
+            url = ''        
+        return url
     
 class Product(models.Model):
     name=models.CharField(max_length=200, blank=False)
@@ -61,9 +72,37 @@ class Product(models.Model):
             url = ''        
         return url
 
+class S_cart(models.Model):
+    account = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True, blank=True)
+    cart_no = models.CharField(max_length=200, null=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.cart_no)
+
+    @property
+    def get_cart_items(self):
+        orderitems = self.cartitem_set.all()        
+        total = sum([item.quantity for item in orderitems])
+        return total
+
+    @property
+    def get_cart_total(self):
+        orderitems = self.orderitem_set.all()        
+        total = sum([item.get_total for item in orderitems])
+        return total
+
+class CartItem(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    scart = models.ForeignKey(S_cart, on_delete=models.SET_NULL, null=True)
+    quantity = models.IntegerField(default=0, null=True, blank=True)
+
+    @property
+    def get_total(self):
+        total = self.product.price * self.quantity
+        return total
 
 
-#hello this is rough
 
 ORDER_STATUS=(
     ('Unshipped','Unshipped'),
@@ -99,7 +138,7 @@ PAYMENT_STATUS=(
 class Payment(models.Model):
     status=models.CharField(max_length=50,choices=PAYMENT_STATUS,default="Unshipped")
     amount=models.FloatField()
-    order=models.ForeignKey(Order,on_delete=models.CASCADE,unique=True)
+    order = models.OneToOneField(Order, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.id)
