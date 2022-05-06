@@ -5,7 +5,8 @@ from .models import *
 
 def home(request):
 	products = Product.objects.all()
-	context = {'products':products}
+	categories = ProductCategory.objects.all()
+	context = {'products':products, 'categories':categories}
 	return render(request, 'store/home.html', context)
 
 def cart(request):
