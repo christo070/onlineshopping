@@ -34,7 +34,7 @@ class Account(models.Model):
     address=models.ForeignKey(Address,on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.firstname
 
 
 class ProductCategory(models.Model):
