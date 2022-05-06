@@ -1,4 +1,3 @@
-from tkinter.tix import Tree
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -12,7 +11,7 @@ class Address(models.Model):
     Zipcode=models.CharField(max_length=30, null=True, blank=True)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.city)
 
 
 ACCOUNT_STATUS=(
@@ -44,14 +43,23 @@ class ProductCategory(models.Model):
         return self.name
     
 class Product(models.Model):
-    name=models.CharField(max_length=200)
+    name=models.CharField(max_length=200, blank=False)
     description=models.TextField()
-    price=models.IntegerField
+    price=models.FloatField(null=True, blank=False)
     available_count=models.IntegerField()
     category=models.ManyToManyField(ProductCategory)
+    image = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         return self.name
+
+    @property
+    def imageURL(self):
+        try:
+            url = self.image.url
+        except:
+            url = ''        
+        return url
 
 
 
