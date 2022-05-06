@@ -38,9 +38,18 @@ class Account(models.Model):
 class ProductCategory(models.Model):
     name=models.CharField(max_length=250)
     description=models.TextField()
+    image = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         return self.name
+
+    @property
+    def imageURL(self):
+        try:
+            url = self.image.url
+        except:
+            url = ''        
+        return url
     
 class Product(models.Model):
     name=models.CharField(max_length=200, blank=False)
