@@ -1,9 +1,10 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from .models import *
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-
+from .models import Product
 # Create your views here.
 
 
@@ -74,23 +75,29 @@ def signup(request):
 
 
 def signin(request):
-    context = {}
-    if request.method == "GET":
-        return render(request, 'store/sign-in.html', context)
-    if request.method == "POST":
-        for i in request.POST.keys():
-            print(i, request.POST[i])
-        username = request.POST['username']
-        password = request.POST['password']
+	context={}
+	if request.method=="GET":
+		return render(request,'store/sign-in.html',context)
+	if request.method=="POST":
+		for i in request.POST.keys():
+			print(i, request.POST[i])
+		username=request.POST['username']
+		password=request.POST['password']
 
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return render(request, 'store/home.html', context)
-        else:
-            messages.success(request, "Username or password Incorrect")
-            return render(request, 'store/sign-in.html', context)
+		user=authenticate(username=username,password=password)
+		if user is not None:
+			login(request,user)
+			return render(request,'store/home.html',context)
+		else:
+			messages.success(request,"Username or password Incorrect")
+			return render(request,'store/sign-in.html',context)
 
+def productdetail(request,id="#"):
+	if request.method=="GET":
+		if id=='#':
+			return HttpResponse('No product is chosen ')
+		product=Product.objects.all()
+		# product=Product.objects.filter(id=id)
+		print(product)
+		return render(request,'store/productdetail.html',{'products':product})
 
-def productdetail(request):
-    return render(request, 'store/product.html')
