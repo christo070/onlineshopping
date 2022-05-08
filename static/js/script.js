@@ -10,3 +10,4 @@ function isSignedIn() {
         document.getElementById('Account-Menu').style.display = 'none';
     }
 }
+
