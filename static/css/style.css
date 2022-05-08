@@ -175,3 +175,13 @@ h1{
 .shopping-cart .def-number-input.number-input button.plus:after {
     background-color: #4285f4;
 }
+
+#quantity{        
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 6px;
+    height: 37px;
+    width: 114px;
+    text-align: center;
+    padding: 5px;
+}
