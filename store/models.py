@@ -4,25 +4,27 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+
 class Address(models.Model):
-    city=models.CharField(max_length=20, null=True, blank=True)
-    streetaddress=models.TextField()
-    state=models.CharField(max_length=30, null=True, blank=True)
-    country=models.CharField(max_length=30, null=True, blank=True)
-    Zipcode=models.CharField(max_length=30, null=True, blank=True)
+    city = models.CharField(max_length=20, null=True, blank=True)
+    streetaddress = models.TextField()
+    state = models.CharField(max_length=30, null=True, blank=True)
+    country = models.CharField(max_length=30, null=True, blank=True)
+    Zipcode = models.CharField(max_length=30, null=True, blank=True)
 
     def __str__(self):
         return str(self.city)
 
 
-ACCOUNT_STATUS=(
-    ('Active','Active'),
-    ('Blocked','Blocked'),
-    ('Banned','Banned'),
-    ('Archived','Archived'),
-    ('Unkown','Unkown'),
-    ('Compromised','Compromised'),
+ACCOUNT_STATUS = (
+    ('Active', 'Active'),
+    ('Blocked', 'Blocked'),
+    ('Banned', 'Banned'),
+    ('Archived', 'Archived'),
+    ('Unkown', 'Unkown'),
+    ('Compromised', 'Compromised'),
 )
+
 
 class Account(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
@@ -38,8 +40,8 @@ class Account(models.Model):
 
 
 class ProductCategory(models.Model):
-    name=models.CharField(max_length=250)
-    description=models.TextField()
+    name = models.CharField(max_length=250)
+    description = models.TextField()
     image = models.ImageField(null=True, blank=True)
 
     def __str__(self):
@@ -50,15 +52,16 @@ class ProductCategory(models.Model):
         try:
             url = self.image.url
         except:
-            url = ''        
+            url = ''
         return url
-    
+
+
 class Product(models.Model):
-    name=models.CharField(max_length=200, blank=False)
-    description=models.TextField()
-    price=models.FloatField(null=True, blank=False)
-    available_count=models.IntegerField()
-    category=models.ManyToManyField(ProductCategory)
+    name = models.CharField(max_length=200, blank=False)
+    description = models.TextField()
+    price = models.FloatField(null=True, blank=False)
+    available_count = models.IntegerField()
+    category = models.ManyToManyField(ProductCategory)
     image = models.ImageField(null=True, blank=True)
 
     def __str__(self):
@@ -69,7 +72,7 @@ class Product(models.Model):
         try:
             url = self.image.url
         except:
-            url = ''        
+            url = ''
         return url
 
 class S_cart(models.Model):
@@ -102,36 +105,68 @@ class CartItem(models.Model):
         total = self.product.price * self.quantity
         return total
 
+class S_cart(models.Model):
+    account = models.ForeignKey(
+        Account, on_delete=models.SET_NULL, null=True, blank=True)
+    cart_no = models.CharField(max_length=200, null=True)
+    date_created = models.DateTimeField(auto_now_add=True)
 
 
-ORDER_STATUS=(
-    ('Unshipped','Unshipped'),
-    ('Pending','Pending'),
-    ('Cancelled','Cancelled'),
-    ('RefundApplicable','RefundApplicable'),
-    ('Complete','Complete'),
-    ('Shipped','Shipped'),
+    @property
+    def get_cart_items(self):
+        orderitems = self.cartitem_set.all()
+        total = sum([item.quantity for item in orderitems])
+        return total
+
+    @property
+    def get_cart_total(self):
+        orderitems = self.orderitem_set.all()
+        total = sum([item.get_total for item in orderitems])
+        return total
+
+
+class CartItem(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    scart = models.ForeignKey(S_cart, on_delete=models.SET_NULL, null=True)
+    quantity = models.IntegerField(default=0, null=True, blank=True)
+
+    @property
+    def get_total(self):
+        total = self.product.price * self.quantity
+        return total
+
+
+ORDER_STATUS = (
+    ('Unshipped', 'Unshipped'),
+    ('Pending', 'Pending'),
+    ('Cancelled', 'Cancelled'),
+    ('RefundApplicable', 'RefundApplicable'),
+    ('Complete', 'Complete'),
+    ('Shipped', 'Shipped'),
 )
 
+
 class Order(models.Model):
-    orderNo=models.IntegerField()
-    status=models.CharField(max_length=50,choices=ORDER_STATUS,default="Unshipped")
-    orderDate=models.DateField(auto_now_add=True)
+    orderNo = models.IntegerField()
+    status = models.CharField(
+        max_length=50, choices=ORDER_STATUS, default="Unshipped")
+    orderDate = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return str(self.orderNo)
 
-PAYMENT_STATUS=(
-    ('Failed','Failed'),
-    ('Unpaid','Unpaid'),
-    ('Pending','Pending'),
-    ('Completed','Completed'),
-    ('Declined','Declined'),
-    ('Settling','Settling'),
-    ('Settled','Settled'),
-    ('Cancelled','Cancelled'),
-    ('Abandoned','Abandoned'),
-    ('Refunded','Refunded'),
+
+PAYMENT_STATUS = (
+    ('Failed', 'Failed'),
+    ('Unpaid', 'Unpaid'),
+    ('Pending', 'Pending'),
+    ('Completed', 'Completed'),
+    ('Declined', 'Declined'),
+    ('Settling', 'Settling'),
+    ('Settled', 'Settled'),
+    ('Cancelled', 'Cancelled'),
+    ('Abandoned', 'Abandoned'),
+    ('Refunded', 'Refunded'),
 )
 
 

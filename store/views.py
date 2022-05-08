@@ -1,16 +1,19 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from .models import *
-from django.contrib import messages 
-from django.contrib.auth import authenticate ,login
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-
+from .models import Product
 # Create your views here.
 
+
 def home(request):
-	products = Product.objects.all()
-	categories = ProductCategory.objects.all()
-	context = {'products':products, 'categories':categories}
-	return render(request, 'store/home.html', context)
+    products = Product.objects.all()
+    categories = ProductCategory.objects.all()
+    context = {'products': products, 'categories': categories}
+    return render(request, 'store/home.html', context)
+
 
 def cart(request):
 	if request.user.is_authenticated:
@@ -82,5 +85,12 @@ def signin(request):
 			messages.success(request,"Username or password Incorrect")
 			return render(request,'store/sign-in.html',context)
 
-		
+def productdetail(request,id="#"):
+	if request.method=="GET":
+		if id=='#':
+			return HttpResponse('No product is chosen ')
+		product=Product.objects.all()
+		# product=Product.objects.filter(id=id)
+		print(product)
+		return render(request,'store/productdetail.html',{'products':product})
 
