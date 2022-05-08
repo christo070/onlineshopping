@@ -34,7 +34,7 @@ class Account(models.Model):
     address=models.ForeignKey(Address,on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.firstname
 
 
 class ProductCategory(models.Model):
@@ -74,22 +74,22 @@ class Product(models.Model):
 
 class S_cart(models.Model):
     account = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True, blank=True)
-    cart_no = models.CharField(max_length=200, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
+    cart_id = models.CharField(max_length=200, null=True)
 
     def __str__(self):
-        return str(self.cart_no)
+        return str(self.cart_id)
 
     @property
     def get_cart_items(self):
-        orderitems = self.cartitem_set.all()        
-        total = sum([item.quantity for item in orderitems])
+        cartitems = self.cartitem_set.all()        
+        total = sum([item.quantity for item in cartitems])
         return total
 
     @property
     def get_cart_total(self):
-        orderitems = self.orderitem_set.all()        
-        total = sum([item.get_total for item in orderitems])
+        cartitems = self.cartitem_set.all()        
+        total = sum([item.get_total for item in cartitems])
         return total
 
 class CartItem(models.Model):
