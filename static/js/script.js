@@ -21,7 +21,8 @@ function getId(btn,str)
     var action;
     productId = btn.id;
     if(str == "view"){
-        action = "view";
+        // window.location.href='./productdetail/{productID
+        action="view";
         return 0;        
     }
     else if(str == "add"){

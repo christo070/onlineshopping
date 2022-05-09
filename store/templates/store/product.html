@@ -6,24 +6,21 @@
     <div class="row">
         <div class="col-sm-6 text-center align-self-center">
             <!-- <img src="{% static 'app/images/product/1.jpg' %}" alt="" class="img-fluid img-thumbnail"> -->
-            <img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fi.ebayimg.com%2Fimages%2Fi%2F272296480856-0-1%2Fs-l1000.jpg&f=1&nofb=1" alt="" class="img-fluid img-thumbnail">
+            <img src="{{ product.imageURL }}" alt="" class="img-fluid img-thumbnail">
 
         </div>
         <div class="col-sm-5 offset-sm-1">
-            <h2>Product Title 1</h2>
+            <h2>{{product.name}}</h2>
             <hr>
 
             <p id="product-description">
                 <b>About this item</b><br>
-                Lorem ipsum dolor sit amet consectetur adipisicing
-                elit. Facere, at. Dignissimos
-                rerum incidunt temporibus laudantium. Rem, eveniet corporis. Itaque delectus quae nesciunt nemo, maiores
-                minus deserunt vel. Vero, nulla quisquam!
+               {{product.description}}
             </p>
             <!-- <h4> 13999 <small class="fw-light text-decoration-line-through">15999</small></h4> <br> -->
             <hr>
 
-            <h4>&#X20B9; 13999</h4> <br>
+            <h4>&#X20B9; {{product.price}}</h4> <br>
             <div style="display:flex; justify-content: center;">
                 <a href="#" class="btn btn-primary shadow px-5 py-2">Add to Cart</a>
                 <a href="#" class="btn btn-danger shadow px-5 py-2 ms-4">Buy Now</a>
@@ -34,7 +31,7 @@
             <table style="width:100%">
                 <tr>
                     <th>Category</th>
-                    <td id="category">Lorem</td>
+                    <td id="category">{{product.category.name}}</td>
                 </tr>
                 <tr>
                     <th>Available Count</th>
