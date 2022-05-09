@@ -2,6 +2,8 @@ var is_Signed_In = true
 window.onload = isSignedIn;
 
 function isSignedIn() {
+    let response = fetch("checksignedin")
+    console.log(response)
     if (is_Signed_In == true) {
         // getDetails();
         document.getElementById('SignUp-Here').style.display = 'none';
