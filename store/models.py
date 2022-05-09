@@ -30,7 +30,7 @@ class Account(models.Model):
     status=models.CharField(max_length=50,choices=ACCOUNT_STATUS,default="Active")
     email=models.EmailField(max_length=250, null=True, blank=True)
     phone=models.CharField(max_length=10, null=True, blank=True)
-    address=models.ManyToManyField(Address, null=True, blank=True)
+    address=models.ManyToManyField(Address, blank=True)
 
     def __str__(self):
         return self.user.username

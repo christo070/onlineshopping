@@ -1,14 +1,21 @@
-from asyncio.windows_events import NULL
 import json
 from django.http import HttpResponse
 from django.shortcuts import render
+# from requests import request
 from .models import *
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login ,logout
 from django.contrib.auth.models import User
 from .models import Product
 from django.http import JsonResponse
 # Create your views here.
+
+def	checksignedin(request):
+	if request.method == 'GET':
+		if request.user.is_authenticated:
+			return JsonResponse({'signed in':True})
+		else:
+			return JsonResponse({'signed in':False})
 
 
 def home(request):
@@ -56,7 +63,7 @@ def checkout(request):
 		else:
 			cartitems = []
 			s_cart = {'get_cart_total':0, 'get_cart_items':0}
-			address=NULL
+			address=[]
 		context = {'cartitems':cartitems, 's_cart':s_cart,'address':address}
 		return render(request, 'store/checkout.html', context)
 	if request.method=='POST':
@@ -98,7 +105,7 @@ def signup(request):
 		password1=request.POST['password1']
 		
 		try:
-			myuser=User.objects.create(username=username,email=email,password=password)
+			myuser=User.objects.create_user(username=username,email=email,password=password)
 			myuser.save()
 		except:
 			messages.success(request,"Username already taken")
@@ -127,6 +134,14 @@ def signin(request):
 			messages.success(request,"Username or password Incorrect")
 			return render(request,'store/sign-in.html',context)
 
+
+def signout(request):
+	if request.method == "GET":
+		if request.user.is_authenticated:
+			logout(request)
+			return render(request,'store/home.html')
+		
+
 def productdetail(request,id="#"):
 	if request.method=="GET":
 		if id=='#':
@@ -134,8 +149,6 @@ def productdetail(request,id="#"):
 		product=Product.objects.get(id=id)
 		
 		return render(request,'store/product.html',{'product':product})
-
-
 
 
 
