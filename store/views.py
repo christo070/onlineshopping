@@ -1,6 +1,6 @@
 import json
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 # from requests import request
 from .models import *
 from django.contrib import messages
@@ -65,8 +65,6 @@ def checkout(request):
 		s_cart, created = S_cart.objects.get_or_create(account = account)
 		cartitems = s_cart.cartitem_set.all()
 		address=account.address_set.all()
-		# address=Account.objects.filter(account=account)
-		print(address,"hello")
 		context = {'cartitems':cartitems, 's_cart':s_cart,'address':address}
 		return render(request, 'store/checkout.html', context)
 
@@ -75,24 +73,28 @@ def checkout(request):
 		if not request.user.is_authenticated:
 			return HttpResponse('you are not login')
 
-		for i in request.POST.keys():
-			print(i,request.POST[i])
+		# for i in request.POST.keys():
+		# 	print(i,request.POST[i])
 		city=request.POST['city']
 		streetaddress=request.POST['streetaddress']
 		country=request.POST['country']
 		state=request.POST['state']
 		pincode=request.POST['pincode']
+
 		try:
-			myaddress=Address(city=city,streetaddress=streetaddress,state=state,country=country,Zipcode=pincode)
-			myaddress.save()
 			account = request.user.account
-			account.address.add(myaddress)
+			myaddress=Address(city=city,streetaddress=streetaddress,state=state,country=country,Zipcode=pincode,account=account)
+			myaddress.save()
 			# now payment process will be processed
 		except:
 			messages.success(request,"Address not deliverable")
-			return render(request, 'store/checkout.html')
-		
-		return render(request,'store/home.html')
+		account = request.user.account
+		s_cart, created = S_cart.objects.get_or_create(account = account)
+		cartitems = s_cart.cartitem_set.all()
+		address=account.address_set.all()
+		print(address)
+		context = {'cartitems':cartitems, 's_cart':s_cart,'address':address}
+		return render(request, 'store/checkout.html', context)
 
 def signup(request):
 	context={}
@@ -106,8 +108,8 @@ def signup(request):
 		lastname=request.POST['lastname']
 		phone=request.POST['phone']
 		email=request.POST['email']
-		password1=request.POST['password1']
-		password2=request.POST['password2']
+		password1=request.POST['password']
+		password2=request.POST['password1']
 		
 		try:
 			myuser=User.objects.create_user(username=username,email=email,password=password1)
@@ -136,7 +138,8 @@ def signin(request):
 			print(user)
 			print("hello world")
 			login(request,user)
-			return render(request,'store/home.html',context)
+			return redirect('/')
+			
 		else:
 			messages.success(request,"Username or password Incorrect")
 			return render(request,'store/sign-in.html',context)

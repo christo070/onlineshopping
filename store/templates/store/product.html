@@ -22,8 +22,8 @@
 
             <h4>&#X20B9; {{product.price}}</h4> <br>
             <div style="display:flex; justify-content: center;">
-                <a href="#" class="btn btn-primary shadow px-5 py-2">Add to Cart</a>
-                <a href="#" class="btn btn-danger shadow px-5 py-2 ms-4">Buy Now</a>
+                <button  onclick="getId(this,'add')" id="{{product.id}}" class="btn btn-primary shadow px-5 py-2">Add to Cart</button>
+                <a href={%url 'checkout'%} ><button onclick="getId(this,'add')" class="btn btn-danger shadow px-5 py-2 ms-4" id="{{product.id}}" >Buy Now</button></a>
             </div>
 
             <hr>
