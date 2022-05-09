@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import *
@@ -29,16 +30,41 @@ def cart(request):
 	return render(request, 'store/cart.html', context)
 
 def checkout(request):
-	if request.user.is_authenticated:
-		account = request.user.account
-		s_cart, created = S_cart.objects.get_or_create(account = account)
-		cartitems = s_cart.cartitem_set.all()
+	if request.method=='GET':
+		if request.user.is_authenticated:
+			account = request.user.account
+			s_cart, created = S_cart.objects.get_or_create(account = account)
+			cartitems = s_cart.cartitem_set.all()
+			address=account.address
 
-	else:
-		cartitems = []
-		s_cart = {'get_cart_total':0, 'get_cart_items':0}
-	context = {'cartitems':cartitems, 's_cart':s_cart}
-	return render(request, 'store/checkout.html', context)
+		else:
+			cartitems = []
+			s_cart = {'get_cart_total':0, 'get_cart_items':0}
+			address=NULL
+		context = {'cartitems':cartitems, 's_cart':s_cart,'address':address}
+		return render(request, 'store/checkout.html', context)
+	if request.method=='POST':
+		if not request.user.is_authenticated:
+			return HttpResponse('you are not login')
+
+		for i in request.POST.keys():
+			print(i,request.POST[i])
+		city=request.POST['city']
+		streetaddress=request.POST['streetaddress']
+		country=request.POST['country']
+		state=request.POST['state']
+		pincode=request.POST['pincode']
+		try:
+			myaddress=Address(city=city,streetaddress=streetaddress,state=state,country=country,Zipcode=pincode)
+			myaddress.save()
+			account = request.user.account
+			account.address.add(myaddress)
+			# now payment process will be processed
+		except:
+			messages.success(request,"Address not deliverable")
+			return render(request, 'store/checkout.html', context)
+		
+		return render(request,'store/home.html')
 
 def signup(request):
 	context={}
@@ -89,8 +115,10 @@ def productdetail(request,id="#"):
 	if request.method=="GET":
 		if id=='#':
 			return HttpResponse('No product is chosen ')
-		product=Product.objects.all()
-		# product=Product.objects.filter(id=id)
-		print(product)
-		return render(request,'store/productdetail.html',{'products':product})
+		product=Product.objects.get(id=id)
+		
+		return render(request,'store/product.html',{'product':product})
+
+
+
 

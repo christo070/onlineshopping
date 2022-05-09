@@ -102,40 +102,28 @@
 
                                 <h3 class="mb-5 pt-2 text-center fw-bold text-uppercase">Shipping Address</h3>
 
-                                <form class="mb-5" style="display: flex;">
-
+                                <form action="" method="POST" class="mb-5" style="display: flex;">
+                                    {% csrf_token %}
                                     <div class="row">
                                         <div class="col-50">
                                             <div>
-                                                <label class="form-label" for="first-name">First name</label>
+                                                <label class="form-label" for="first-name" name="firstname" >First name</label>
                                                 <input type="text" id="first-name" name="first-name" class="form-control" />
                                             </div>
                                             <div>
-                                                <label class="form-label" for="last-name">Last name</label>
-                                                <input type="text" id="last-name" class="form-control" />
+                                                <label class="form-label" for="last-name" name="lastname">Last name</label>
+                                                <input type="text" id="last-name" name="lastname" class="form-control" />
                                             </div>
                                             <div>
-                                                <label class="form-label" for="company-name">Company name</label>
-                                                <input type="text" id="company-name" class="form-control" />
+                                                <label class="form-label" for="company-name" name="company">Company name</label>
+                                                <input type="text" id="company-name" name="comapany" class="form-control" />
                                             </div>
                                             <div>
-                                                <label class="form-label" for="address">Address</label>
-                                                <textarea type="text" id="address" class="form-control"
+                                                <label class="form-label" for="address" name="address">Address</label>
+                                                <textarea type="text" id="address" name="address" class="form-control"
                                                     rows="4"></textarea>
                                             </div>
-                                            <div>
-                                                <label class="form-label" for="email">Email</label>
-                                                <input type="email" id="email" class="form-control" />
-                                            </div>
-                                            <div>
-
-                                                <label class="form-label" for="phone">Phone</label>
-                                                <input type="number" id="phone" class="form-control" />
-                                            </div>
-                                            <div>
-                                                <label class="form-label" for="add-info">Additional information</label>
-                                                <textarea class="form-control" id="add-info" rows="4"></textarea>
-                                            </div>
+                            
 
 
                                         </div>
@@ -153,7 +141,7 @@
                                             </p>
                                         </div>
                                         <div style="justify-content: center; display: flex; align-items: center;">
-                                            <button type="button" class="btn btn-primary btn-block btn-lg">
+                                            <button type="submit" class="btn btn-primary btn-block btn-lg">
                                                 Place Order</button>
                                         </div>
                                         <h5 class="fw-bold mb-5" style="position: absolute; bottom: 0;">
