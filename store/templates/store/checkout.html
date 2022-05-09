@@ -50,7 +50,7 @@
                                                     <strong>&#8377; {{ item.product.price|floatformat:2 }}</strong>
                                                 </p>
                                                 <!-- Price -->
-                                                <button type="button" class="btn btn-primary btn-sm me-1 mb-2"
+                                                <button onclick="getId(this,'delete')" id="{{item.product.id}}"  type="button" class="btn btn-primary btn-sm me-1 mb-2"
                                                     data-mdb-toggle="tooltip" title="Remove item">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
@@ -64,8 +64,7 @@
                                             <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                                                 <!-- Quantity -->
                                                 <div class="d-flex mb-4" style="max-width: 300px">
-                                                    <button class="btn btn-primary px-3 me-2" style="height:50%"
-                                                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                    <button onclick="getId(this,'remove')" id="{{item.product.id}}"  class="btn btn-primary px-3 me-2" style="height:50%">
                                                         <i class="fas fa-minus"></i>
                                                     </button>
                 
@@ -74,8 +73,7 @@
                                                         <label>Quantity</label>
                                                     </div>
                 
-                                                    <button class="btn btn-primary px-3 ms-2" style="height:50%" 
-                                                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                                    <button onclick="getId(this,'add')" id="{{item.product.id}}"  class="btn btn-primary px-3 ms-2" style="height:50%">
                                                         <i class="fas fa-plus"></i>
                                                     </button>
                                                 </div>

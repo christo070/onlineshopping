@@ -8,6 +8,17 @@ html{
 	display: none; /* for Chrome, Safari, and Opera */
   }
 
+#cart-total{
+	display: block;
+	text-align: center;
+	color:#fff;
+	background-color: #247680;
+	width: 20px;
+	height: 25px;
+	border-radius: 50%;
+	font-size: 14px;
+}
+
 .carousel-item{
     height: 25rem;
 }

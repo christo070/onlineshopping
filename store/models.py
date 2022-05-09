@@ -1,30 +1,27 @@
-from tkinter.tix import Tree
 from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
 
-
 class Address(models.Model):
-    city = models.CharField(max_length=20, null=True, blank=True)
-    streetaddress = models.TextField()
-    state = models.CharField(max_length=30, null=True, blank=True)
-    country = models.CharField(max_length=30, null=True, blank=True)
-    Zipcode = models.CharField(max_length=30, null=True, blank=True)
+    city=models.CharField(max_length=20, null=True, blank=True)
+    streetaddress=models.TextField()
+    state=models.CharField(max_length=30, null=True, blank=True)
+    country=models.CharField(max_length=30, null=True, blank=True)
+    Zipcode=models.CharField(max_length=30, null=True, blank=True)
 
     def __str__(self):
         return str(self.city)
 
 
-ACCOUNT_STATUS = (
-    ('Active', 'Active'),
-    ('Blocked', 'Blocked'),
-    ('Banned', 'Banned'),
-    ('Archived', 'Archived'),
-    ('Unkown', 'Unkown'),
-    ('Compromised', 'Compromised'),
+ACCOUNT_STATUS=(
+    ('Active','Active'),
+    ('Blocked','Blocked'),
+    ('Banned','Banned'),
+    ('Archived','Archived'),
+    ('Unkown','Unkown'),
+    ('Compromised','Compromised'),
 )
-
 
 class Account(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
@@ -33,15 +30,15 @@ class Account(models.Model):
     status=models.CharField(max_length=50,choices=ACCOUNT_STATUS,default="Active")
     email=models.EmailField(max_length=250, null=True, blank=True)
     phone=models.CharField(max_length=10, null=True, blank=True)
-    address=models.ManyToManyField(Address,on_delete=models.CASCADE, null=True, blank=True)
+    address=models.ManyToManyField(Address, null=True, blank=True)
 
     def __str__(self):
-        return self.firstname
+        return self.user.username
 
 
 class ProductCategory(models.Model):
-    name = models.CharField(max_length=250)
-    description = models.TextField()
+    name=models.CharField(max_length=250)
+    description=models.TextField()
     image = models.ImageField(null=True, blank=True)
 
     def __str__(self):
@@ -52,16 +49,15 @@ class ProductCategory(models.Model):
         try:
             url = self.image.url
         except:
-            url = ''
+            url = ''        
         return url
-
-
+    
 class Product(models.Model):
-    name = models.CharField(max_length=200, blank=False)
-    description = models.TextField()
-    price = models.FloatField(null=True, blank=False)
-    available_count = models.IntegerField()
-    category = models.ManyToManyField(ProductCategory)
+    name=models.CharField(max_length=200, blank=False)
+    description=models.TextField()
+    price=models.FloatField(null=True, blank=False)
+    available_count=models.IntegerField()
+    category=models.ManyToManyField(ProductCategory)
     image = models.ImageField(null=True, blank=True)
 
     def __str__(self):
@@ -72,7 +68,7 @@ class Product(models.Model):
         try:
             url = self.image.url
         except:
-            url = ''
+            url = ''        
         return url
 
 class S_cart(models.Model):
@@ -80,8 +76,8 @@ class S_cart(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     cart_id = models.CharField(max_length=200, null=True)
 
-    def __str__(self):
-        return str(self.cart_id)
+    # def __str__(self):
+    #     return str(self.cart_id)
 
     @property
     def get_cart_items(self):
@@ -107,15 +103,14 @@ class CartItem(models.Model):
 
 
 
-ORDER_STATUS = (
-    ('Unshipped', 'Unshipped'),
-    ('Pending', 'Pending'),
-    ('Cancelled', 'Cancelled'),
-    ('RefundApplicable', 'RefundApplicable'),
-    ('Complete', 'Complete'),
-    ('Shipped', 'Shipped'),
+ORDER_STATUS=(
+    ('Unshipped','Unshipped'),
+    ('Pending','Pending'),
+    ('Cancelled','Cancelled'),
+    ('RefundApplicable','RefundApplicable'),
+    ('Complete','Complete'),
+    ('Shipped','Shipped'),
 )
-
 
 class Order(models.Model):
     orderNo = models.IntegerField()
@@ -127,18 +122,17 @@ class Order(models.Model):
     def __str__(self):
         return str(self.orderNo)
 
-
-PAYMENT_STATUS = (
-    ('Failed', 'Failed'),
-    ('Unpaid', 'Unpaid'),
-    ('Pending', 'Pending'),
-    ('Completed', 'Completed'),
-    ('Declined', 'Declined'),
-    ('Settling', 'Settling'),
-    ('Settled', 'Settled'),
-    ('Cancelled', 'Cancelled'),
-    ('Abandoned', 'Abandoned'),
-    ('Refunded', 'Refunded'),
+PAYMENT_STATUS=(
+    ('Failed','Failed'),
+    ('Unpaid','Unpaid'),
+    ('Pending','Pending'),
+    ('Completed','Completed'),
+    ('Declined','Declined'),
+    ('Settling','Settling'),
+    ('Settled','Settled'),
+    ('Cancelled','Cancelled'),
+    ('Abandoned','Abandoned'),
+    ('Refunded','Refunded'),
 )
 
 
