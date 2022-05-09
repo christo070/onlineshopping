@@ -47,18 +47,23 @@ def cart(request):
 
 def checkout(request):
 	if request.method=='GET':
-		if request.user.is_authenticated:
-			account = request.user.account
-			s_cart, created = S_cart.objects.get_or_create(account = account)
-			cartitems = s_cart.cartitem_set.all()
-			address=account.address
-
-		else:
-			cartitems = []
-			s_cart = {'get_cart_total':0, 'get_cart_items':0}
-			address=NULL
+		
+		if not request.user.is_authenticated:
+			return HttpResponse('you are not login')
+			# cartitems = []
+			# s_cart = {'get_cart_total':0, 'get_cart_items':0}
+			# address=NULL
+		
+		account = request.user.account
+		s_cart, created = S_cart.objects.get_or_create(account = account)
+		cartitems = s_cart.cartitem_set.all()
+		address=account.address_set.all()
+		# address=Account.objects.filter(account=account)
+		print(address,"hello")
 		context = {'cartitems':cartitems, 's_cart':s_cart,'address':address}
 		return render(request, 'store/checkout.html', context)
+
+
 	if request.method=='POST':
 		if not request.user.is_authenticated:
 			return HttpResponse('you are not login')
@@ -78,7 +83,7 @@ def checkout(request):
 			# now payment process will be processed
 		except:
 			messages.success(request,"Address not deliverable")
-			return render(request, 'store/checkout.html', context)
+			return render(request, 'store/checkout.html')
 		
 		return render(request,'store/home.html')
 
@@ -94,11 +99,11 @@ def signup(request):
 		lastname=request.POST['lastname']
 		phone=request.POST['phone']
 		email=request.POST['email']
-		password=request.POST['password']
 		password1=request.POST['password1']
+		password2=request.POST['password2']
 		
 		try:
-			myuser=User.objects.create(username=username,email=email,password=password)
+			myuser=User.objects.create_user(username=username,email=email,password=password1)
 			myuser.save()
 		except:
 			messages.success(request,"Username already taken")
@@ -119,8 +124,10 @@ def signin(request):
 		username=request.POST['username']
 		password=request.POST['password']
 
-		user=authenticate(username=username,password=password)
+		user=authenticate(request,username=username,password=password)
 		if user is not None:
+			print(user)
+			print("hello world")
 			login(request,user)
 			return render(request,'store/home.html',context)
 		else:

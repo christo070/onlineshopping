@@ -1,17 +1,10 @@
+from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Address(models.Model):
-    city=models.CharField(max_length=20, null=True, blank=True)
-    streetaddress=models.TextField()
-    state=models.CharField(max_length=30, null=True, blank=True)
-    country=models.CharField(max_length=30, null=True, blank=True)
-    Zipcode=models.CharField(max_length=30, null=True, blank=True)
 
-    def __str__(self):
-        return str(self.city)
 
 
 ACCOUNT_STATUS=(
@@ -30,10 +23,20 @@ class Account(models.Model):
     status=models.CharField(max_length=50,choices=ACCOUNT_STATUS,default="Active")
     email=models.EmailField(max_length=250, null=True, blank=True)
     phone=models.CharField(max_length=10, null=True, blank=True)
-    address=models.ManyToManyField(Address, null=True, blank=True)
 
     def __str__(self):
         return self.user.username
+
+class Address(models.Model):
+    city=models.CharField(max_length=20, null=True, blank=True)
+    streetaddress=models.TextField()
+    state=models.CharField(max_length=30, null=True, blank=True)
+    country=models.CharField(max_length=30, null=True, blank=True)
+    Zipcode=models.CharField(max_length=30, null=True, blank=True)
+    account=models.ForeignKey(Account,on_delete=models.SET_NULL ,null=True, blank=True)
+
+    def __str__(self):
+        return str(self.city)
 
 
 class ProductCategory(models.Model):

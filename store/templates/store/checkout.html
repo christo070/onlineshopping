@@ -95,6 +95,11 @@
                                 </div>
 
                             </div>
+                            <!--Akhil test file-->
+                                {%for i in address %}
+
+
+                            <!--    akhil test case ends here-->
 
                             <div class="col-lg-6 px-5 py-4">
 
@@ -105,20 +110,24 @@
                                     <div class="row">
                                         <div class="col-50">
                                             <div>
-                                                <label class="form-label" for="first-name" name="firstname" >First name</label>
-                                                <input type="text" id="first-name" name="first-name" class="form-control" />
+                                                <label class="form-label" for="first-name" name="city" >First name</label>
+                                                <input type="text" id="first-name" name="city" class="form-control" />
                                             </div>
                                             <div>
-                                                <label class="form-label" for="last-name" name="lastname">Last name</label>
-                                                <input type="text" id="last-name" name="lastname" class="form-control" />
+                                                <label class="form-label" for="last-name" name="streetaddress">Last name</label>
+                                                <input type="text" id="last-name" name="streetaddress" class="form-control" />
                                             </div>
                                             <div>
-                                                <label class="form-label" for="company-name" name="company">Company name</label>
-                                                <input type="text" id="company-name" name="comapany" class="form-control" />
+                                                <label class="form-label" for="company-name" name="state">Company name</label>
+                                                <input type="text" id="company-name" name="state" class="form-control" />
                                             </div>
                                             <div>
-                                                <label class="form-label" for="address" name="address">Address</label>
-                                                <textarea type="text" id="address" name="address" class="form-control"
+                                                <label class="form-label" for="company-name" name="country">Company name</label>
+                                                <input type="text" id="company-name" name="country" class="form-control" />
+                                            </div>
+                                            <div>
+                                                <label class="form-label" for="address" name="pincode">Address</label>
+                                                <textarea type="text" id="address" name="pincode" class="form-control"
                                                     rows="4"></textarea>
                                             </div>
                             
@@ -140,7 +149,7 @@
                                         </div>
                                         <div style="justify-content: center; display: flex; align-items: center;">
                                             <button type="submit" class="btn btn-primary btn-block btn-lg">
-                                                Place Order</button>
+                                                Add Address</button>
                                         </div>
                                         <h5 class="fw-bold mb-5" style="position: absolute; bottom: 0;">
                                             <a href="{% url 'cart' %}"><i class="fas fa-angle-left me-2"></i>Continue
