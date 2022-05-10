@@ -11,4 +11,5 @@ urlpatterns = [
     path('productdetail/<int:id>', views.productdetail, name='productdetail'),
     path('update_item/', views.updateItem, name='update_item'),
     path('checksignedin/', views.checksignedin, name='checksignedin'),
+    path('payment/',views.rz_payment_integration,name='payment')
 ]

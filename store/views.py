@@ -1,3 +1,4 @@
+from audioop import add
 import json
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
@@ -8,6 +9,10 @@ from django.contrib.auth import authenticate, login ,logout
 from django.contrib.auth.models import User
 from .models import Product
 from django.http import JsonResponse
+import razorpay
+from OnlineBazaar.settings import RAZORPAY_API_KEY,RAZORPAY_API_SECRET
+import time
+from math import ceil
 # Create your views here.
 
 def	checksignedin(request):
@@ -75,15 +80,16 @@ def checkout(request):
 
 		# for i in request.POST.keys():
 		# 	print(i,request.POST[i])
+		addressline1 = request.POST['addressline1']
+		street=request.POST['street']
 		city=request.POST['city']
-		streetaddress=request.POST['streetaddress']
+		pincode=request.POST['pincode']
 		country=request.POST['country']
 		state=request.POST['state']
-		pincode=request.POST['pincode']
 
 		try:
 			account = request.user.account
-			myaddress=Address(city=city,streetaddress=streetaddress,state=state,country=country,Zipcode=pincode,account=account)
+			myaddress=Address(AddressLine1=addressline1,city=city,street=street,state=state,country=country,Zipcode=pincode,account=account)
 			myaddress.save()
 			# now payment process will be processed
 		except:
@@ -190,3 +196,59 @@ def updateItem(request):
 
 	return JsonResponse('Item was added', safe=False)
 
+
+client = razorpay.Client(auth=(RAZORPAY_API_KEY, RAZORPAY_API_SECRET))
+def rz_payment_integration(request):
+
+	week_limit = 604800
+	invoice_expiry = ceil(time.time()) + week_limit
+
+	account = request.user.account
+	firstname = account.firstname
+	lastname = account.lastname
+	phone = account.phone
+	email = account.email
+	address=account.address_set.all()[0]
+	s_cart, created = S_cart.objects.get_or_create(account = account)
+	cartitems = s_cart.cartitem_set.all()
+	# print(cartitems)
+
+	cart_items = list()
+	for j in cartitems:
+		cart_items.append({'name':j.product.name,'description':'','amount':j.product.price*100,'quantity':j.quantity,'currency':'INR'})
+	
+	
+	obj = client.invoice.create({
+	"type": "invoice",
+	"description": "OnlineBazaar",
+	"partial_payment": 0,
+	"customer": {
+		"name": firstname+" "+lastname,
+		"contact": phone,
+		"email": email,
+		"billing_address": {
+		"line1": address.AddressLine1,
+		"line2": address.street,
+		"zipcode": address.Zipcode,
+		"city": address.city,
+		"state": address.state,
+		"country": "in"
+		},
+		"shipping_address": {
+		"line1": address.AddressLine1,
+		"line2": address.street,
+		"zipcode": address.Zipcode,
+		"city": address.city,
+		"state": address.state,
+		"country": "in"
+		}
+	},
+	"line_items":cart_items,
+	"sms_notify": 0,
+	"email_notify": 1,
+	"currency": "INR",
+	"expire_by": invoice_expiry
+	})
+
+	context = {'order_id':obj['order_id'],'amount':obj['amount'],'username':firstname+" "+lastname,'rz_key':RAZORPAY_API_KEY,'address':address,'email':email,'contact':phone}
+	return render(request,'store/payment.html',context)

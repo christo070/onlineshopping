@@ -111,27 +111,70 @@
                                     <div class="row">
                                         <div class="col-50">
                                             <div>
-                                                <label class="form-label" for="first-name" name="city" >First name</label>
-                                                <input type="text" id="first-name" name="city" class="form-control" />
+                                                <label class="form-label" for="first-name">First name</label>
+                                                <input type="text" id="first-name" name="first-name" class="form-control" />
                                             </div>
                                             <div>
-                                                <label class="form-label" for="last-name" name="streetaddress">Last name</label>
-                                                <input type="text" id="last-name" name="streetaddress" class="form-control" />
+                                                <label class="form-label" for="last-name">Last name</label>
+                                                <input type="text" name="last-name" id="last-name" class="form-control" />
+                                            </div>
+                                            <!-- <div>
+                                                <label class="form-label" for="company-name">Company name</label>
+                                                <input type="text" id="company-name" class="form-control" />
+                                            </div> -->
+                                            <div>
+                                                <table style="width:100%">
+                                                    <label class="form-label" for="address">Address</label>
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <input type="text" id="address-line1"
+                                                                placeholder="Address Line 1" name="addressline1" class="form-control" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <input type="text" id="address-line2"
+                                                                placeholder="Address Line 2" name="street" class="form-control" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="text" id="city" name="city" placeholder="City"
+                                                                class="form-control" />
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="zip-code" name="pincode" placeholder="Zip-Code"
+                                                                class="form-control" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="text" id="state" name="state" placeholder="State"
+                                                                class="form-control" />
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="country" name="country" placeholder="Country"
+                                                                class="form-control" />
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <!-- <textarea type="text" id="address" class="form-control"
+                                                    rows="4"></textarea> -->
+
                                             </div>
                                             <div>
-                                                <label class="form-label" for="company-name" name="state">Company name</label>
-                                                <input type="text" id="company-name" name="state" class="form-control" />
+                                                <label class="form-label" for="email">Email</label>
+                                                <input type="email" id="email" class="form-control" />
                                             </div>
                                             <div>
-                                                <label class="form-label" for="company-name" name="country">Company name</label>
-                                                <input type="text" id="company-name" name="country" class="form-control" />
+
+                                                <label class="form-label" for="phone">Phone</label>
+                                                <input type="number" id="phone" class="form-control" />
                                             </div>
-                                            <div>
-                                                <label class="form-label" for="address" name="pincode">Address</label>
-                                                <textarea type="text" id="address" name="pincode" class="form-control"
-                                                    rows="4"></textarea>
-                                            </div>
-                            
+                                            <!-- <div>
+                                                <label class="form-label" for="add-info">Additional information</label>
+                                                <textarea class="form-control" id="add-info" rows="4"></textarea>
+                                            </div> -->
 
 
                                         </div>
@@ -148,11 +191,11 @@
                                                 </label>
                                             </p>
                                         </div>
-                                        <div style="justify-content: center; display: flex; align-items: center;">
-                                            <button type="submit" class="btn btn-primary btn-block btn-lg">
-                                                Add Address</button>
-                                            <button type="button" class="btn btn-primary btn-block btn-lg">
-                                                payment</button>
+                                        <div style="justify-content: center; display: flex; align-items: center">
+                                            <div class="p-4"><button type="button" id="placeorder" class="btn btn-primary btn-block btn-lg">
+                                                Place Order</button></div>
+                                                <div><button type="submit" class = "btn btn-primary btn-block btn-lg">Add Address</button></div>
+                                                
                                         </div>
                                         <h5 class="fw-bold mb-5" style="position: absolute; bottom: 0;">
                                             <a href="{% url 'cart' %}"><i class="fas fa-angle-left me-2"></i>Continue
@@ -175,5 +218,10 @@
 <!-- MDB -->
 <!-- <script type="text/javascript"
  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.js"></script> -->
+ <script type="text/javascript">
+    document.getElementById("placeorder").onclick = function () {
+        location.href = "{% url 'payment' %}";
+    };
+</script>
 
 {% endblock content %}

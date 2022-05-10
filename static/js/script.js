@@ -1,16 +1,30 @@
-var is_Signed_In = true
 window.onload = isSignedIn;
 
 function isSignedIn() {
-    let response = fetch("checksignedin")
-    console.log(response)
-    if (is_Signed_In == true) {
-        // getDetails();
-        document.getElementById('SignUp-Here').style.display = 'none';
-    }
-    else {
-        document.getElementById('Account-Menu').style.display = 'none';
-    }
+    var url = 'checksignedin'
+
+    fetch(url, {
+        headers:{
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest', //Necessary to work with request.is_ajax()
+        },
+    })
+    .then(response => {
+        return response.json() //Convert response to JSON
+    })
+    .then(data => {
+        //Perform actions with the response data from the view
+        var is_Signed_In = data.response
+        console.log(is_Signed_In) 
+        
+        if (is_Signed_In == 'true') {
+            // getDetails();
+            document.getElementById('SignUp-Here').style.display = 'none';
+        }
+        else {
+            document.getElementById('Account-Menu').style.display = 'none';
+        }     
+    })    
 }
 
 

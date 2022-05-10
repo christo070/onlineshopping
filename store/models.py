@@ -4,9 +4,6 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-
-
-
 ACCOUNT_STATUS=(
     ('Active','Active'),
     ('Blocked','Blocked'),
@@ -28,11 +25,12 @@ class Account(models.Model):
         return self.user.username
 
 class Address(models.Model):
+    AddressLine1=models.CharField(max_length=50, null=True, blank=True)
+    street=models.CharField(max_length=30, null=True, blank=True)
     city=models.CharField(max_length=20, null=True, blank=True)
-    streetaddress=models.TextField()
+    Zipcode=models.CharField(max_length=30, null=True, blank=True)
     state=models.CharField(max_length=30, null=True, blank=True)
     country=models.CharField(max_length=30, null=True, blank=True)
-    Zipcode=models.CharField(max_length=30, null=True, blank=True)
     account=models.ForeignKey(Account,on_delete=models.SET_NULL ,null=True, blank=True)
 
     def __str__(self):
