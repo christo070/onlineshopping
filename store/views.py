@@ -211,7 +211,6 @@ def rz_payment_integration(request):
 	address=account.address_set.all()[0]
 	s_cart, created = S_cart.objects.get_or_create(account = account)
 	cartitems = s_cart.cartitem_set.all()
-	# print(cartitems)
 
 	cart_items = list()
 	for j in cartitems:
@@ -244,7 +243,7 @@ def rz_payment_integration(request):
 		}
 	},
 	"line_items":cart_items,
-	"sms_notify": 0,
+	"sms_notify": 1,
 	"email_notify": 1,
 	"currency": "INR",
 	"expire_by": invoice_expiry
