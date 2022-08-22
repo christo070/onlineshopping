@@ -134,5 +134,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 MEDIA_URL = '/images/'
 
-RAZORPAY_API_KEY = 'rzp_test_9FTcgVfZbFxXfp' # Kindly remove RAZORPAY_API_KEY after project demonstration (sensitive)
-RAZORPAY_API_SECRET = 'qNhMq1d8TKwah3ATnpj6zte5'  # Kindly remove RAZORPAY_API_SECRET after project demonstration (sensitive)
+RAZORPAY_API_KEY = '#' # Kindly remove RAZORPAY_API_KEY after project demonstration (sensitive)
+RAZORPAY_API_SECRET = '#'  # Kindly remove RAZORPAY_API_SECRET after project demonstration (sensitive)
